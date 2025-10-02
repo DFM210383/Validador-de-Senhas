@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+public class ValidadorSenha {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("=== Validador de Senhas ===");
+        System.out.print("Digite uma senha para validar: ");
+        String senha = scanner.nextLine();
+        
+        if (validarSenha(senha)) {
+            System.out.println("✅ Senha válida!");
+        } else {
+            System.out.println("❌ Senha inválida! A senha deve ter:");
+            System.out.println("- Pelo menos 8 caracteres");
+            System.out.println("- Pelo menos 1 letra maiúscula");
+            System.out.println("- Pelo menos 1 letra minúscula");
+            System.out.println("- Pelo menos 1 número");
+            System.out.println("- Pelo menos 1 caractere especial (@#$%&*!)");
+            System.out.println("- Não pode conter espaços");
+        }
+        
+        scanner.close();
+    }
+    
+    public static boolean validarSenha(String senha) {
+        if (senha.length() < 8 || senha.contains(" ")) return false;
+
+        boolean temMaiuscula = false;
+        boolean temMinuscula = false;
+        boolean temNumero = false;
+        boolean temEspecial = false;
+
+        for (char c : senha.toCharArray()) {
+            if (Character.isUpperCase(c)) temMaiuscula = true;
+            else if (Character.isLowerCase(c)) temMinuscula = true;
+            else if (Character.isDigit(c)) temNumero = true;
+            else if ("@#$%&*!".contains(String.valueOf(c))) temEspecial = true;
+        }
+
+        return temMaiuscula && temMinuscula && temNumero && temEspecial;
+    }
+}
